@@ -1,0 +1,51 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: "*"
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: monitoring
+      interval: 24h
+  values:
+    prometheusOperator:
+      admissionWebhooks:
+        enabled: false
+      tls:
+        enabled: false
+    alertmanager:
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - ""
+        paths:
+          - /alertmanager
+        pathType: ImplementationSpecific
+      alertmanagerSpec:
+        routePrefix: /alertmanager
+    grafana:
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - ""
+        path: /
+    prometheus:
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - ""
+        paths:
+          - /prometheus
+        pathType: ImplementationSpecific
+      prometheusSpec:
+        routePrefix: /prometheus
