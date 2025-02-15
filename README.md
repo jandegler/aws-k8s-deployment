@@ -187,16 +187,16 @@ Adjust the variables of the Terraform configuration and use the following comman
 terraform init
 terraform apply
 
-# Use EC2 Instance Connect to access the EC2 instance via SSH either with the following command or by using the AWS
-# console.
+# Use EC2 Instance Connect to access the EC2 instance via SSH either with the following command
+# or by using the AWS console.
 # Read the EC2 instance ID and region from the Terraform output.
 aws ec2-instance-connect ssh \
     --instance-id "<EC2_INSTANCE_ID>" \
     --os-user root \
     --region "<REGION>" \
     --connection-type eice
-# Check the cloud init output log. If the script ran to completion one of the lines at the end of the text file should
-# read: "Pre-baked AMI setup script finished successfully."
+# Check the cloud init output log. If the script ran to completion one of the lines at the end
+# of the text file should read: "Pre-baked AMI setup script finished successfully."
 nano /var/log/cloud-init-output.log
 
 # Leave SSH and execute the following command to create an AMI from the running instance.
